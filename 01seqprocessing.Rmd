@@ -1,5 +1,5 @@
 ---
-title: "Sequence processing - "
+title: "Sequence processing "
 ---
 
 
@@ -31,7 +31,7 @@ To view `.qza` and `.qzv` files go to [QIIME2 view](https://view.qiime2.org/)
 
 > Assumes paired-end data that does not require demultiplexing
 
-Place raw data files in zipped format (i.e. `.fastq.gz` in a directory called `raw_data/`).
+Place raw data files in zipped format (i.e. `.fastq.gz` in a directory called `raw_data/`).he raw data can be downloaded from repository link [here](https://figshare.com/s/804cc8b2a17d4f01f2c7).
 
 ### File naming conventions
 
@@ -48,7 +48,7 @@ Note: QIIME2 input however is zipped fastq files i.e. `.fastq.gz`.
 In this analysis the raw data files names are:
 
 - `SampleID-student_Library_L001_R1_001.fastq.gz`
-- S1-TC_S06_L001_R1_001.fastq.gz
+- `S1-TC_S06_L001_R1_001.fastq.gz`
 
 ```{bash rename, eval=FALSE, include=FALSE}
 # renaming raw data files

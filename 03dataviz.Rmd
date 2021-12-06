@@ -478,7 +478,7 @@ NMDS attempts to represent the pairwise dissimilarity between objects in a low-d
 
 Ordination of samples using DCA. Leave distance blank, so default is chi-square.
 
-```{r}
+```{r ord_DCA}
 # Ordinate the data
 set.seed(4235421)
 mycols <- c("brown3", "steelblue")
@@ -495,7 +495,7 @@ ord_DCA
 
 Ordination of samples using CCA methods using Pearson chi-squared. Constrained variable used as `sampleType`.
 
-```{r}
+```{r ord_CCA}
 mycols <- c("brown3", "steelblue")
 pseq.cca <- ordinate(ps, "CCA", cca = "sampleType")
 ord_CCA <- plot_ordination(ps, pseq.cca, color = "sampleType")
@@ -510,7 +510,7 @@ ord_CCA
     
 Ordination of samples using RDA methods using Euclidean distance. Constrained variable used as `sampleType`.
 
-```{r}
+```{r ord_RDA}
 mycols <- c("brown3", "steelblue")
 pseq.rda <- ordinate(ps, "RDA", cca = "sampleType")
 ord_RDA <- plot_ordination(ps, pseq.rda, color = "sampleType")
@@ -526,7 +526,7 @@ PCoA is very similar to PCA, RDA, CA, and CCA in that they are all based on eige
 
 Ordination of samples using PCoA methods and **jaccard** (presence/absence) distance measure
 
-```{r}
+```{r ord_PCoA_jac}
 # Ordinate the data
 set.seed(4235421)
 mycols <- c("brown3", "steelblue")
@@ -539,7 +539,7 @@ ord_PCoA_jac
 
 Ordination of samples using PCoA methods and **bray curtis** (abundance) distance measure.
 
-```{r}
+```{r ord_PCoA_bray}
 # Ordinate the data
 set.seed(4235421)
 mycols <- c("brown3", "steelblue")
@@ -559,7 +559,7 @@ We can perform unweighted (using presence/absence abundance like jaccard) or wei
 
 *Unweighted unifrac*
 
-```{r}
+```{r ord_PCoA_ufuw}
 # Ordinate the data
 set.seed(4235421)
 mycols <- c("brown3", "steelblue")
@@ -571,7 +571,7 @@ ord_PCoA_ufuw
 
 *Weighted unifrac*
 
-```{r}
+```{r ord_PCoA_ufw}
 mycols <- c("brown3", "steelblue")
 ord_pcoa_ufw = ordinate(ps, "PCoA", "unifrac", weighted=TRUE)
 ord_PCoA_ufw = plot_ordination(ps, ord_pcoa_ufw, color="sampleType", shape="student")
@@ -584,7 +584,7 @@ ord_PCoA_ufw
 
 Finally lets perform ordination using Non-metric Multidimensional Scaling. We'll use the unifrac distance measure which takes into account phylogeny and also the `WEIGHTED` option.
 
-```{r}
+```{r ord_NMDS_ufw}
 # Ordinate the data
 set.seed(4235421)
 mycols <- c("brown3", "steelblue")
@@ -602,7 +602,7 @@ See tutorial [here](https://mibwurrepo.github.io/Microbial-bioinformatics-introd
 
 Differences by `sampleType` using ANOVA
 
-```{r}
+```{r anova}
 # Transform data to hellinger
 pseq.rel <- microbiome::transform(ps, "hellinger")
 # Pick relative abundances (compositional) and sample metadata 
@@ -626,8 +626,9 @@ Beta diversity metrics can assess the differences between microbial communities.
 
 Function from [MicrobiotaProcess](https://bioconductor.org/packages/devel/bioc/vignettes/MicrobiotaProcess/inst/doc/MicrobiotaProcess-basics.html) using analysis based on [ggtree](https://yulab-smu.top/treedata-book/).
 
+Cluster plot of all samples i.e. faecal and positive control.
 
-```{r}
+```{r clust1}
 ## All samples - detailed, include species and SampleCategory
 clust_all <- get_clust(obj=ps, distmethod="euclidean",
                       method="hellinger", hclustmethod="average")
@@ -644,7 +645,9 @@ clust_all_plot <- ggclust(obj=clust_all ,
 clust_all_plot
 ```
 
-```{r}
+Cluster plot of just the faecal samples.
+
+```{r clust2}
 # subset just faecal samples
 FEC_ps <- subset_samples(ps, sampleType=="Sample")
 ## All samples - detailed, include species and SampleCategory

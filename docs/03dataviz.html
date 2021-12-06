@@ -797,7 +797,7 @@ ord.dca &lt;- ordinate(ps, &quot;DCA&quot;)
 ord_DCA = plot_ordination(ps, ord.dca, color = &quot;sampleType&quot;) +
                 geom_point(size = 5) + scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_DCA</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_DCA-1.png" width="672" /></p>
 </div>
 <div id="canonical-correspondence-analysis-cca" class="section level4">
 <h4>Canonical correspondence analysis (CCA)</h4>
@@ -809,7 +809,7 @@ ord_CCA &lt;- plot_ordination(ps, pseq.cca, color = &quot;sampleType&quot;)
 ord_CCA &lt;- ord_CCA + geom_point(size = 4) + 
   scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_CCA</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_CCA-1.png" width="672" /></p>
 </div>
 <div id="redundancy-analysis-rda" class="section level4">
 <h4>Redundancy analysis (RDA)</h4>
@@ -821,7 +821,7 @@ ord_RDA &lt;- plot_ordination(ps, pseq.rda, color = &quot;sampleType&quot;)
 ord_RDA &lt;- ord_RDA + geom_point(size = 4) + 
   scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_RDA</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_RDA-1.png" width="672" /></p>
 </div>
 <div id="principal-coordinates-analysis-pcoa" class="section level4">
 <h4>Principal Coordinates Analysis (PCoA)</h4>
@@ -835,7 +835,7 @@ ord.pcoa.jac &lt;- ordinate(ps, &quot;PCoA&quot;, &quot;jaccard&quot;)
 ord_PCoA_jac = plot_ordination(ps, ord.pcoa.jac, color = &quot;sampleType&quot;) +
                 geom_point(size = 5) + scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_PCoA_jac</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_PCoA_jac-1.png" width="672" /></p>
 <p>Ordination of samples using PCoA methods and <strong>bray curtis</strong> (abundance) distance measure.</p>
 <pre class="r"><code># Ordinate the data
 set.seed(4235421)
@@ -844,7 +844,7 @@ ord.pcoa.bray &lt;- ordinate(ps, &quot;PCoA&quot;, &quot;bray&quot;)
 ord_PCoA_bray = plot_ordination(ps, ord.pcoa.bray, color = &quot;sampleType&quot;) +
                 geom_point(size = 5) + scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_PCoA_bray</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_PCoA_bray-1.png" width="672" /></p>
 </div>
 <div id="principal-coordinates-analysis-pcoa-with-unifrac" class="section level4">
 <h4>Principal Coordinates Analysis (PCoA) with unifrac</h4>
@@ -858,7 +858,7 @@ ord_pcoa_ufuw &lt;- ordinate(ps, &quot;PCoA&quot;, &quot;unifrac&quot;, weighted
 ord_PCoA_ufuw = plot_ordination(ps, ord_pcoa_ufuw, color = &quot;sampleType&quot;, shape=&quot;student&quot;) +
                 geom_point(size = 5) + scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_PCoA_ufuw</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_PCoA_ufuw-1.png" width="672" /></p>
 <p><em>Weighted unifrac</em></p>
 <pre class="r"><code>mycols &lt;- c(&quot;brown3&quot;, &quot;steelblue&quot;)
 ord_pcoa_ufw = ordinate(ps, &quot;PCoA&quot;, &quot;unifrac&quot;, weighted=TRUE)
@@ -866,7 +866,7 @@ ord_PCoA_ufw = plot_ordination(ps, ord_pcoa_ufw, color=&quot;sampleType&quot;, s
 ord_PCoA_ufw &lt;- ord_PCoA_ufw + geom_point(size = 4) + 
   scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_PCoA_ufw</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_PCoA_ufw-1.png" width="672" /></p>
 </div>
 <div id="non-metric-multidimensional-scaling-nmds" class="section level4">
 <h4>Non-metric Multidimensional Scaling (nMDS)</h4>
@@ -929,7 +929,7 @@ ord_nmds_ufw &lt;- ordinate(ps, &quot;NMDS&quot;, &quot;unifrac&quot;, weighted=
 <pre class="r"><code>ord_NMDS_ufw = plot_ordination(ps, ord_nmds_ufw, color = &quot;sampleType&quot;, shape=&quot;student&quot;) +
                 geom_point(size = 5) + scale_color_manual(values=mycols) + stat_ellipse() + theme_bw()
 ord_NMDS_ufw</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/ord_NMDS_ufw-1.png" width="672" /></p>
 </div>
 </div>
 <div id="statistical-analysis" class="section level3">
@@ -966,6 +966,7 @@ anova(betadisper(dist, meta$sampleType))</code></pre>
 <h2>Hierarchical cluster analysis</h2>
 <p>Beta diversity metrics can assess the differences between microbial communities. It can be visualized with PCA or PCoA, this can also be visualized with hierarchical clustering.</p>
 <p>Function from <a href="https://bioconductor.org/packages/devel/bioc/vignettes/MicrobiotaProcess/inst/doc/MicrobiotaProcess-basics.html">MicrobiotaProcess</a> using analysis based on <a href="https://yulab-smu.top/treedata-book/">ggtree</a>.</p>
+<p>Cluster plot of all samples i.e. faecal and positive control.</p>
 <pre class="r"><code>## All samples - detailed, include species and SampleCategory
 clust_all &lt;- get_clust(obj=ps, distmethod=&quot;euclidean&quot;,
                       method=&quot;hellinger&quot;, hclustmethod=&quot;average&quot;)
@@ -980,7 +981,8 @@ clust_all_plot &lt;- ggclust(obj=clust_all ,
   scale_shape_manual(values=c(17, 15, 16, 1, 5, 6)) + 
   ggtitle(&quot;Hierarchical Cluster of All Samples (euclidean)&quot;)
 clust_all_plot</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/clust1-1.png" width="672" /></p>
+<p>Cluster plot of just the faecal samples.</p>
 <pre class="r"><code># subset just faecal samples
 FEC_ps &lt;- subset_samples(ps, sampleType==&quot;Sample&quot;)
 ## All samples - detailed, include species and SampleCategory
@@ -997,7 +999,7 @@ clust_all_plot &lt;- ggclust(obj=clust_all ,
   scale_shape_manual(values=c(17, 15, 16, 1, 5, 6)) + 
   ggtitle(&quot;Hierarchical Cluster of All Samples (euclidean)&quot;)
 clust_all_plot</code></pre>
-<p><img src="03dataviz_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="03dataviz_files/figure-html/clust2-1.png" width="672" /></p>
 </div>
 <div id="phylogeny" class="section level2">
 <h2>Phylogeny</h2>
