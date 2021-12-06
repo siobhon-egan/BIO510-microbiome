@@ -1,0 +1,34 @@
+name: "BIO510 microbiome"
+output_dir: docs
+navbar:
+  title: "BIO510 microbiome"
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "Setup"
+      icon: fa-gear
+      href: setup.html
+    - text: "Data analysis"
+      icon: fas fa-book-open
+      menu:
+       - text: "Sequence processing"
+         href: 01seqprocessing.html
+       - text: "-----------"
+       - text: "Inspect output"
+         href: 02dataoutput.html
+       - text: "-----------"
+       - text: "Data visualization"
+         href: 03dataviz.html      
+  right:
+  - icon: fab fa-github
+    href: https://github.com/siobhon-egan/BIO510-microbiome
+output:
+  html_document:
+    css: ["assets/mystyle.css", "assets/murdoch-fonts.css"]
+    toc: true
+    toc_float:
+      collapsed: false
+    include:
+      in_header: assets/header.html
+      after_body: assets/footer.html
