@@ -1,0 +1,226 @@
+---
+title: "Sequence processing - "
+---
+
+
+**Background**
+
+This workflow is written for analysing amplicon data in QIIME2. 
+Input data is demultiplexed paired-end reads in the file format `.fastq` where files are zipped (i.e. `.fastq.gz`).
+
+We will not be performing the steps outlined below today but those that would like further information can stay behind for assistance in installing the required programs to reproduce the analysis later.
+
+The code below is written for execution via the command line (bash language).
+
+## 1. Install & activate QIIME2 environment
+
+This workflow utilsing commandline interface with QIIME2.
+
+Requires miniconda/conda, see [here](https://docs.qiime2.org/2021.4/install/native/#installing-miniconda)
+
+QIIME2 version = qiime2-2021.4
+
+**Activate qiime2 environment**
+```{bash activate, eval = FALSE}
+conda activate qiime2-2021.4
+```
+
+To view `.qza` and `.qzv` files go to [QIIME2 view](https://view.qiime2.org/)
+
+## 2. Input data
+
+> Assumes paired-end data that does not require demultiplexing
+
+Place raw data files in zipped format (i.e. `.fastq.gz` in a directory called `raw_data/`).
+
+### File naming conventions
+
+In [Casava 1.8 demultiplexed (paired-end)](https://docs.qiime2.org/2020.11/tutorials/importing/#casava-1-8-paired-end-demultiplexed-fastq) format, there are two `.fastq.gz` files for each sample in the study, each containing the forward or reverse reads for that sample. The file name includes the sample identifier. The forward and reverse read file names for a single sample might look like XXXX_XXXX_L001_R1_001.fastq.gz and XXXX_XXXX_L001_R2_001.fastq.gz, respectively. The underscore-separated fields in this file name are:
+
+- the sample identifier,
+- the barcode sequence or a barcode identifier (something which signifies distinct sequencing libraries)
+- the lane number,
+- the direction of the read (i.e. R1 or R2), and
+- the set number.
+
+Note: QIIME2 input however is zipped fastq files i.e. `.fastq.gz`.
+
+In this analysis the raw data files names are:
+
+- `SampleID-student_Library_L001_R1_001.fastq.gz`
+- S1-TC_S06_L001_R1_001.fastq.gz
+
+```{bash rename, eval=FALSE, include=FALSE}
+# renaming raw data files
+cd data/raw_data
+gzip *.fastq
+mv	DHPC_r1_001.fastq.gz	PC-DH_S01_L001_R1_001.fastq.gz
+mv	DHPC_r2_001.fastq.gz	PC-DH_S01_L001_R2_001.fastq.gz
+mv	DHS4_r1_001.fastq.gz	S4-DH_S02_L001_R1_001.fastq.gz
+mv	DHS4_r2_001.fastq.gz	S4-DH_S02_L001_R2_001.fastq.gz
+mv	AYPC_r1_001.fastq.gz	PC-AY_S03_L001_R1_001.fastq.gz
+mv	AYPC_r2_001.fastq.gz	PC-AY_S03_L001_R2_001.fastq.gz
+mv	AYS3_r1_001.fastq.gz	S3-AY_S04_L001_R1_001.fastq.gz
+mv	AYS3_r2_001.fastq.gz	S3-AY_S04_L001_R2_001.fastq.gz
+mv	TCPC_r1_001.fastq.gz	PC-TC_S05_L001_R1_001.fastq.gz
+mv	TCPC_r2_001.fastq.gz	PC-TC_S05_L001_R2_001.fastq.gz
+mv	TCS1_r1_001.fastq.gz	S1-TC_S06_L001_R1_001.fastq.gz
+mv	TCS1_r2_001.fastq.gz	S1-TC_S06_L001_R2_001.fastq.gz
+mv	MJPC_r1_001.fastq.gz	PC-MJ_S07_L001_R1_001.fastq.gz
+mv	MJPC_r2_001.fastq.gz	PC-MJ_S07_L001_R2_001.fastq.gz
+mv	MJS3_r1_001.fastq.gz	S3-MJ_S08_L001_R1_001.fastq.gz
+mv	MJS3_r2_001.fastq.gz	S3-MJ_S08_L001_R2_001.fastq.gz
+mv	JLPC_r1_001.fastq.gz	PC-JL_S09_L001_R1_001.fastq.gz
+mv	JLPC_r2_001.fastq.gz	PC-JL_S09_L001_R2_001.fastq.gz
+mv	JLS3_r1_001.fastq.gz	S3-JL_S10_L001_R1_001.fastq.gz
+mv	JLS3_r2_001.fastq.gz	S3-JL_S10_L001_R2_001.fastq.gz
+mv	DSPC_r2_001.fastq.gz	PC-DS_S11_L001_R2_001.fastq.gz
+mv	DSS1_r2_001.fastq.gz	S1-DS_S12_L001_R2_001.fastq.gz
+mv	DSS1_r1_001.fastq.gz	S1-DS_S12_L001_R1_001.fastq.gz
+mv	DSPC_r1_001.fastq.gz	PC-DS_S11_L001_R1_001.fastq.gz
+```
+
+## 3. Import as QIIME2 artefact
+
+Import `.fastq.gz` data into QIIME2 format using [Casava 1.8 demultiplexed (paired-end)](https://docs.qiime2.org/2020.11/tutorials/importing/#casava-1-8-paired-end-demultiplexed-fastq) option. Remember assumes raw data is in directory labelled `raw_data/` and file naming format as above.
+
+```{bash eval=FALSE}
+qiime tools import \
+--type 'SampleData[PairedEndSequencesWithQuality]' \
+--input-path raw_data \
+--input-format CasavaOneEightSingleLanePerSampleDirFmt \
+--output-path 16S_demux_seqs.qza
+```
+
+
+### Inspect reads for quality
+
+To inspect raw reads we generate a `qzv` file to view in the [QIIME2 view](https://view.qiime2.org/) website.
+
+Use this output to choose your parameters for QC such as trimming low quality sequences and truncating sequence length.
+
+```{bash eval=FALSE}
+qiime demux summarize \
+  --i-data 16S_demux_seqs.qza \
+  --o-visualization 16S_demux_seqs.qzv
+```
+
+:::: {.content-box .content-box-teal2tint}
+**YOUR TURN**: Navigate to the website https://view.qiime2.org/ and upload the file sequence quality file that is in the directory `data/qiime2/16S_demux_seqs.qzv`. Drag and drop it into the QIIME2 view website.
+::::
+
+
+## 4. Sequence quality control and feature table construction
+
+**Denoise using dada2**
+
+Based on quality plot in the above output `16S_demux_seqs.qza` adjust trim length to where quality falls.
+
+Then you can also trim primers. In this case working with 16S v4 data with the following primers
+
+
+515F - GTGYCAGCMGCCGCGGTAA (19 nt)
+806R - GGACTACNVGGGTWTCTAAT (20 nt)
+
+```{bash eval=FALSE}
+qiime dada2 denoise-paired \
+  --i-demultiplexed-seqs 16S_demux_seqs.qza \
+  --p-trim-left-f 19 \
+  --p-trim-left-r 20 \
+  --p-trunc-len-f 250 \
+  --p-trunc-len-r 250 \
+  --o-table 16S_denoise_table.qza \
+  --o-representative-sequences 16S_denoise_rep-seqs.qza \
+  --o-denoising-stats 16S_denoise-stats.qza
+```
+
+At this stage, you will have artifacts containing the feature table, corresponding feature sequences, and DADA2 denoising stats. Now we will want to generate summaries of these
+
+```{bash eval=FALSE}
+qiime feature-table summarize \
+  --i-table 16S_denoise_table.qza \
+  --o-visualization 16S_denoise_table.qzv \
+
+qiime feature-table tabulate-seqs \
+  --i-data 16S_denoise_rep-seqs.qza \
+  --o-visualization 16S_denoise_rep-seqs.qzv
+
+qiime metadata tabulate \
+  --m-input-file 16S_denoise-stats.qza \
+  --o-visualization 16S_denoise-stats.qzv
+```
+
+:::: {.content-box .content-box-teal2tint}
+**YOUR TURN**: Navigate to the website https://view.qiime2.org/ and upload the file sequence quality file that is in the directory `data/qiime2/16S_denoise-stats.qzv`. Drag and drop it into the QIIME2 view website.
+::::
+
+### Export ASV table
+
+To produce an ASV table with number of each ASV reads per sample that you can open in excel. Use tutorial [here](https://rstudio-pubs-static.s3.amazonaws.com/489645_5fff8a6a02d84084a55e3b5b6ff960a4.html#)
+
+Need to make biom file first
+
+```{bash eval=FALSE}
+qiime tools export \
+--input-path 16S_denoise_table.qza \
+--output-path feature-table
+
+biom convert \
+-i feature-table/feature-table.biom \
+-o feature-table/feature-table.tsv \
+--to-tsv
+```
+
+## 5. Phylogeny
+
+Several downstream diversity metrics, available within QIIME 2, require that a phylogenetic tree be constructed using the Operational Taxonomic Units (OTUs) or Amplicon Sequence Variants (ASVs) being investigated. Documentation [here](https://docs.qiime2.org/2020.11/tutorials/phylogeny/)
+
+```{bash eval=FALSE}
+qiime phylogeny align-to-tree-mafft-fasttree \
+  --i-sequences rep-seqs.qza \
+  --o-alignment aligned-rep-seqs.qza \
+  --o-masked-alignment masked-aligned-rep-seqs.qza \
+  --o-tree unrooted-tree.qza \
+  --o-rooted-tree rooted-tree.qza
+```
+
+**Export**
+
+Covert trees output to newick formatted file
+
+```{bash eval=FALSE}
+qiime tools export \
+  --input-path unrooted-tree.qza \
+  --output-path exported-unrooted-tree
+  
+qiime tools export \
+  --input-path rooted-tree.qza \
+  --output-path exported-rooted-tree
+```
+
+## 6. Taxonomy
+
+Assign taxonomy to denoised sequences using a pre-tarined naive bayes classifier and the [q2-feature-classifier](https://docs.qiime2.org/2020.11/plugins/available/feature-classifier/) plugin. Details on how to create a classifier are available [here](link).
+
+Note that  taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads.
+
+```{bash eval=FALSE}
+qiime feature-classifier classify-sklearn \
+--i-classifier ~/db/QIIME2_trained_classifiers_2021.4/silva-138-99-nb-classifier.qza \
+--i-reads 16S_denoise_rep-seqs.qza \
+--o-classification qiime2-taxa-silva/taxonomy.qza
+
+qiime metadata tabulate \
+--m-input-file qiime2-taxa-silva/taxonomy.qza \
+--o-visualization qiime2-taxa-silva/taxonomy.qzv
+```
+
+Generate a taxonomy table table to tsv from the commandline
+
+```{bash eval=FALSE}
+qiime tools export \
+--input-path qiime2-taxa-silva/taxonomy.qza \
+--output-path exports
+```
+
+

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Sequence processing -</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="assets/mystyle.css" type="text/css" />
+<link rel="stylesheet" href="assets/murdoch-fonts.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIO510 microbiome</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li>
+  <a href="setup.html">
+    <span class="fa fa-gear"></span>
+     
+    Setup
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fas fa-book-open"></span>
+     
+    Data analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01seqprocessing.html">Sequence processing</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="02dataoutput.html">Inspect output</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="03dataviz.html">Data visualization</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/siobhon-egan/BIO510-microbiome">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Sequence processing -</h1>
+
+</div>
+
+
+<p><strong>Background</strong></p>
+<p>This workflow is written for analysing amplicon data in QIIME2. Input data is demultiplexed paired-end reads in the file format <code>.fastq</code> where files are zipped (i.e. <code>.fastq.gz</code>).</p>
+<p>We will not be performing the steps outlined below today but those that would like further information can stay behind for assistance in installing the required programs to reproduce the analysis later.</p>
+<p>The code below is written for execution via the command line (bash language).</p>
+<div id="install-activate-qiime2-environment" class="section level2">
+<h2>1. Install &amp; activate QIIME2 environment</h2>
+<p>This workflow utilsing commandline interface with QIIME2.</p>
+<p>Requires miniconda/conda, see <a href="https://docs.qiime2.org/2021.4/install/native/#installing-miniconda">here</a></p>
+<p>QIIME2 version = qiime2-2021.4</p>
+<p><strong>Activate qiime2 environment</strong></p>
+<pre class="bash"><code>conda activate qiime2-2021.4</code></pre>
+<p>To view <code>.qza</code> and <code>.qzv</code> files go to <a href="https://view.qiime2.org/">QIIME2 view</a></p>
+</div>
+<div id="input-data" class="section level2">
+<h2>2. Input data</h2>
+<blockquote>
+<p>Assumes paired-end data that does not require demultiplexing</p>
+</blockquote>
+<p>Place raw data files in zipped format (i.e. <code>.fastq.gz</code> in a directory called <code>raw_data/</code>).</p>
+<div id="file-naming-conventions" class="section level3">
+<h3>File naming conventions</h3>
+<p>In <a href="https://docs.qiime2.org/2020.11/tutorials/importing/#casava-1-8-paired-end-demultiplexed-fastq">Casava 1.8 demultiplexed (paired-end)</a> format, there are two <code>.fastq.gz</code> files for each sample in the study, each containing the forward or reverse reads for that sample. The file name includes the sample identifier. The forward and reverse read file names for a single sample might look like XXXX_XXXX_L001_R1_001.fastq.gz and XXXX_XXXX_L001_R2_001.fastq.gz, respectively. The underscore-separated fields in this file name are:</p>
+<ul>
+<li>the sample identifier,</li>
+<li>the barcode sequence or a barcode identifier (something which signifies distinct sequencing libraries)</li>
+<li>the lane number,</li>
+<li>the direction of the read (i.e. R1 or R2), and</li>
+<li>the set number.</li>
+</ul>
+<p>Note: QIIME2 input however is zipped fastq files i.e. <code>.fastq.gz</code>.</p>
+<p>In this analysis the raw data files names are:</p>
+<ul>
+<li><code>SampleID-student_Library_L001_R1_001.fastq.gz</code></li>
+<li>S1-TC_S06_L001_R1_001.fastq.gz</li>
+</ul>
+</div>
+</div>
+<div id="import-as-qiime2-artefact" class="section level2">
+<h2>3. Import as QIIME2 artefact</h2>
+<p>Import <code>.fastq.gz</code> data into QIIME2 format using <a href="https://docs.qiime2.org/2020.11/tutorials/importing/#casava-1-8-paired-end-demultiplexed-fastq">Casava 1.8 demultiplexed (paired-end)</a> option. Remember assumes raw data is in directory labelled <code>raw_data/</code> and file naming format as above.</p>
+<pre class="bash"><code>qiime tools import \
+--type &#39;SampleData[PairedEndSequencesWithQuality]&#39; \
+--input-path raw_data \
+--input-format CasavaOneEightSingleLanePerSampleDirFmt \
+--output-path 16S_demux_seqs.qza</code></pre>
+<div id="inspect-reads-for-quality" class="section level3">
+<h3>Inspect reads for quality</h3>
+<p>To inspect raw reads we generate a <code>qzv</code> file to view in the <a href="https://view.qiime2.org/">QIIME2 view</a> website.</p>
+<p>Use this output to choose your parameters for QC such as trimming low quality sequences and truncating sequence length.</p>
+<pre class="bash"><code>qiime demux summarize \
+  --i-data 16S_demux_seqs.qza \
+  --o-visualization 16S_demux_seqs.qzv</code></pre>
+<div class="content-box content-box-teal2tint">
+<p><strong>YOUR TURN</strong>: Navigate to the website <a href="https://view.qiime2.org/" class="uri">https://view.qiime2.org/</a> and upload the file sequence quality file that is in the directory <code>data/qiime2/16S_demux_seqs.qzv</code>. Drag and drop it into the QIIME2 view website.</p>
+</div>
+</div>
+</div>
+<div id="sequence-quality-control-and-feature-table-construction" class="section level2">
+<h2>4. Sequence quality control and feature table construction</h2>
+<p><strong>Denoise using dada2</strong></p>
+<p>Based on quality plot in the above output <code>16S_demux_seqs.qza</code> adjust trim length to where quality falls.</p>
+<p>Then you can also trim primers. In this case working with 16S v4 data with the following primers</p>
+<p>515F - GTGYCAGCMGCCGCGGTAA (19 nt) 806R - GGACTACNVGGGTWTCTAAT (20 nt)</p>
+<pre class="bash"><code>qiime dada2 denoise-paired \
+  --i-demultiplexed-seqs 16S_demux_seqs.qza \
+  --p-trim-left-f 19 \
+  --p-trim-left-r 20 \
+  --p-trunc-len-f 250 \
+  --p-trunc-len-r 250 \
+  --o-table 16S_denoise_table.qza \
+  --o-representative-sequences 16S_denoise_rep-seqs.qza \
+  --o-denoising-stats 16S_denoise-stats.qza</code></pre>
+<p>At this stage, you will have artifacts containing the feature table, corresponding feature sequences, and DADA2 denoising stats. Now we will want to generate summaries of these</p>
+<pre class="bash"><code>qiime feature-table summarize \
+  --i-table 16S_denoise_table.qza \
+  --o-visualization 16S_denoise_table.qzv \
+
+qiime feature-table tabulate-seqs \
+  --i-data 16S_denoise_rep-seqs.qza \
+  --o-visualization 16S_denoise_rep-seqs.qzv
+
+qiime metadata tabulate \
+  --m-input-file 16S_denoise-stats.qza \
+  --o-visualization 16S_denoise-stats.qzv</code></pre>
+<div class="content-box content-box-teal2tint">
+<p><strong>YOUR TURN</strong>: Navigate to the website <a href="https://view.qiime2.org/" class="uri">https://view.qiime2.org/</a> and upload the file sequence quality file that is in the directory <code>data/qiime2/16S_denoise-stats.qzv</code>. Drag and drop it into the QIIME2 view website.</p>
+</div>
+<div id="export-asv-table" class="section level3">
+<h3>Export ASV table</h3>
+<p>To produce an ASV table with number of each ASV reads per sample that you can open in excel. Use tutorial <a href="https://rstudio-pubs-static.s3.amazonaws.com/489645_5fff8a6a02d84084a55e3b5b6ff960a4.html#">here</a></p>
+<p>Need to make biom file first</p>
+<pre class="bash"><code>qiime tools export \
+--input-path 16S_denoise_table.qza \
+--output-path feature-table
+
+biom convert \
+-i feature-table/feature-table.biom \
+-o feature-table/feature-table.tsv \
+--to-tsv</code></pre>
+</div>
+</div>
+<div id="phylogeny" class="section level2">
+<h2>5. Phylogeny</h2>
+<p>Several downstream diversity metrics, available within QIIME 2, require that a phylogenetic tree be constructed using the Operational Taxonomic Units (OTUs) or Amplicon Sequence Variants (ASVs) being investigated. Documentation <a href="https://docs.qiime2.org/2020.11/tutorials/phylogeny/">here</a></p>
+<pre class="bash"><code>qiime phylogeny align-to-tree-mafft-fasttree \
+  --i-sequences rep-seqs.qza \
+  --o-alignment aligned-rep-seqs.qza \
+  --o-masked-alignment masked-aligned-rep-seqs.qza \
+  --o-tree unrooted-tree.qza \
+  --o-rooted-tree rooted-tree.qza</code></pre>
+<p><strong>Export</strong></p>
+<p>Covert trees output to newick formatted file</p>
+<pre class="bash"><code>qiime tools export \
+  --input-path unrooted-tree.qza \
+  --output-path exported-unrooted-tree
+  
+qiime tools export \
+  --input-path rooted-tree.qza \
+  --output-path exported-rooted-tree</code></pre>
+</div>
+<div id="taxonomy" class="section level2">
+<h2>6. Taxonomy</h2>
+<p>Assign taxonomy to denoised sequences using a pre-tarined naive bayes classifier and the <a href="https://docs.qiime2.org/2020.11/plugins/available/feature-classifier/">q2-feature-classifier</a> plugin. Details on how to create a classifier are available <a href="link">here</a>.</p>
+<p>Note that taxonomic classifiers perform best when they are trained based on your specific sample preparation and sequencing parameters, including the primers that were used for amplification and the length of your sequence reads.</p>
+<pre class="bash"><code>qiime feature-classifier classify-sklearn \
+--i-classifier ~/db/QIIME2_trained_classifiers_2021.4/silva-138-99-nb-classifier.qza \
+--i-reads 16S_denoise_rep-seqs.qza \
+--o-classification qiime2-taxa-silva/taxonomy.qza
+
+qiime metadata tabulate \
+--m-input-file qiime2-taxa-silva/taxonomy.qza \
+--o-visualization qiime2-taxa-silva/taxonomy.qzv</code></pre>
+<p>Generate a taxonomy table table to tsv from the commandline</p>
+<pre class="bash"><code>qiime tools export \
+--input-path qiime2-taxa-silva/taxonomy.qza \
+--output-path exports</code></pre>
+</div>
+
+<hr> 
+<div class="logos"><img src="assets/squaremu.png" width="50px" align="right"></div>
+
+<br></br>
+
+<p style="text-align: center;"><span style="color: #4F5556;"><em>Copyright, Siobhon Egan, 2021.</em></span></p>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Add font awesome icons -->
+<p style="text-align: center;">
+    <a href="https://twitter.com/r_graph_gallery?lang=en" class="fa fa-twitter"></a>
+    <a href="https://www.linkedin.com/in/yan-holtz-2477534a/" class="fa fa-linkedin"></a>
+    <a href="https://github.com/holtzy/" class="fa fa-github"></a>
+</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

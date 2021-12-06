@@ -1,0 +1,269 @@
+blockquote, .blockquote {
+  display: block;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-left: solid 10px #00737A;
+  border-top: solid 2px #00737A;
+  border-bottom: solid 2px #00737A;
+  border-right: solid 2px #00737A;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+  /* background-color: #E92C4A; */
+  color: #e12744;
+  padding: 0.5em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#footer > p:first-child {
+    float: left;
+    text-align: left;
+    width: 33.3%; }
+
+#footer > p:nth-child(2) {
+    float: left;
+    text-align: center;
+    width: 33.4%; 
+}
+
+#footer { 
+  background: black; 
+  clear: both;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+
+/* navbar */
+.navbar-default {
+    background-color: black;
+    border-color: #E7E7E7;
+    border-bottom: 5px solid #e12744;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #e12744;
+    background-color: gray;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #e12744;
+    background-color: gray;
+}
+
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: black;
+    background-color: #e12744;
+}
+
+
+/* Alan new stuff 11/05/16 */
+
+.navbar-default .navbar-nav > .dropdown > a {
+    color: white;
+    background-color: black;
+}
+
+
+.navbar-default .navbar-nav > .dropdown > a:hover {
+    color: #e12744;
+    background-color: gray;
+}
+
+
+.navbar-default .navbar-nav > .dropdown > a:focus {
+    color: black;
+    background-color: #e12744;
+}
+
+
+.navbar-default .navbar-nav > .dropdown > .dropdown-menu > li > a:hover {
+    color: #e12744;
+    background-color: gray;
+}
+
+
+.navbar-default .navbar-nav > .dropdown >  .active > li > a,
+.navbar-default .navbar-nav > .dropdown >  .active > li > a:hover,
+.navbar-default .navbar-nav > .dropdown >  .active > li > a:focus {
+    color: black;
+    background-color: #e12744;
+}
+
+.navbar-default .navbar-nav > .dropdown >  .open > li > a,
+.navbar-default .navbar-nav > .dropdown >  .open > li > a:hover,
+.navbar-default .navbar-nav > .dropdown >  .open > li > a:focus {
+    color: black;
+    background-color: #e12744;
+}
+
+
+
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: red;
+    border-bottom-color: red;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: red;
+    border-bottom-color: red;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: red;
+    border-bottom-color: red;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #e12744;
+        background-color: gray;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #e12744;
+        background-color: gray;
+    }
+}
+
+
+hr {
+height: 2px;
+color: #e12744;
+background-color: #e12744;
+border: none;
+}
+
+/******************
+ * Coloured content boxes
+ ****************/
+.content-box {
+    box-sizing: border-box;
+    background-color: #e2e2e2;
+}
+.content-box-success,
+.content-box-warning,
+.content-box-danger,
+.content-box-info,
+.content-box-pink,
+.content-box-maroon,
+.content-box-orange,
+.content-box-magenta,
+.content-box-seafoam,
+.content-box-teal,
+.content-box-grey
+.content-box-teal2,
+.content-box-teal3,
+.content-box-pink2,
+.content-box-orange2,
+.content-box-red2tint,
+.content-box-teal2tint,
+.content-box-pink2tint,
+.content-box-orange2tint {
+  box-sizing: border-box;
+  border-radius: 15px;
+  margin: 0 0 15px;
+  overflow: hidden;
+  padding: 0px 20px 0px 20px;
+  width: 100%;
+}
+
+/* Murdoch alert colour boxes */
+.content-box-success { background-color: #639234; }
+.content-box-warning { background-color: #AE1E26; }
+.content-box-danger {	background-color: #BD770E; }
+.content-box-info { background-color: #2372A7; }
+
+/* Murdoch alert colour boxes light */
+.content-box-success-lg { background-color: #E2E8E2; }
+.content-box-warning-lg { background-color: #EADFD8; }
+.content-box-danger-lg {	background-color: #EDE3DD; }
+.content-box-info-lg { background-color: #DCE5ED; }
+
+/* Murdoch colour boxes */
+.content-box-pink { background-color: #f7a8ae; }
+.content-box-maroon { background-color: #ac1d43; }
+.content-box-orange {	background-color: #f3744a; }
+.content-box-magenta {	background-color: #ec008b; }
+.content-box-seafoam { background-color: #4abd98; }
+.content-box-teal { background-color: #006472; }
+.content-box-grey { background-color: #d0d1d3; }
+
+/* Murdoch secondary colour boxes */
+.content-box-teal2 { background-color: #00737A; }
+.content-box-teal3 { background-color: #16E9C6; }
+.content-box-pink2 {	background-color: #D71D96; }
+.content-box-orange2 {	background-color: #C8451E; }
+.content-box-red2tint { background-color: #EFE6EA; }
+.content-box-teal2tint { background-color: #D9E6EB; }
+.content-box-pink2tint { background-color: #EDDDEB; }
+.content-box-orange2tint { background-color: #ECE1DF; }
+
+.content-box-success .remark-inline-code,
+.content-box-warning .remark-inline-code,
+.content-box-danger .remark-inline-code,
+.content-box-info .remark-inline-code,
+.content-box-pink .remark-inline-code,
+.content-box-maroon .remark-inline-code,
+.content-box-orange .remark-inline-code,
+.content-box-magenta .remark-inline-code,
+.content-box-seafoam .remark-inline-code,
+.content-box-teal .remark-inline-code,
+.content-box-grey .remark-inline-code,
+/* Murdoch secondary colour boxes */
+.content-box-teal2 .remark-inline-code,
+.content-box-teal3 .remark-inline-code,
+.content-box-pink2 .remark-inline-code,
+.content-box-orange2 .remark-inline-code,
+.content-box-red2tint .remark-inline-code,
+.content-box-teal2tint .remark-inline-code,
+.content-box-pink2tint .remark-inline-code,
+.content-box-orange2tint .remark-inline-code {
+  background: none;
+}
+
+.full-width {
+    display: flex;
+    width: 100%;
+    flex: 1 1 auto;
+}
+
+/* Customise the TOC */
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #F8F6F4;
+    background-color: #E12744;
+    border-color: #0B1213;
+}
+
+a {
+  color: #006472;
+}
+
+<link rel="stylesheet" href="./font-awesome-4.5.0/css/font-awesome.min.css">

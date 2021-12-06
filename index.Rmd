@@ -1,0 +1,11 @@
+---
+title: "BIO510 - microbiome analysis"
+---
+
+Welcome to workshop on analysis for amplicon microbiome data.
+
+In this lesson we'll work through the data from the sequencing libraries prepared with A/Prof Abha Chopra and A/Prof. Mark Watson.
+
+See the [set up](setup.html) page for instructions on setting up your workspace.
+
+![](assets/ANPC.png)
