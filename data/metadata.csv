@@ -1,0 +1,13 @@
+﻿sample_name,seq_id,sample_id,student,sampleType,week
+PC-AY,PC-AY_S03,PC,AY,PositiveControl,
+PC-DH,PC-DH_S01,PC,DH,PositiveControl,
+PC-DS,PC-DS_S11,PC,DS,PositiveControl,
+PC-JL,PC-JL_S09,PC,JL,PositiveControl,
+PC-MJ,PC-MJ_S07,PC,MJ,PositiveControl,
+PC-TC,PC-TC_S05,PC,TC,PositiveControl,
+S1-DS,S1-DS_S12,S1,DS,Sample,1
+S1-TC,S1-TC_S06,S1,TC,Sample,1
+S3-AY,S3-AY_S04,S3,AY,Sample,1
+S3-JL,S3-JL_S10,S3,JL,Sample,1
+S3-MJ,S3-MJ_S08,S3,MJ,Sample,1
+S4-DH,S4-DH_S02,S4,DH,Sample,2
